@@ -1,0 +1,76 @@
+name: Production CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  backend-test:
+    name: Backend Lint & Test (PHP)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, pdo_pgsql
+    - name: Install Dependencies
+      working-directory: ./backend
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Run Tests
+      working-directory: ./backend
+      run: php artisan test
+
+  frontend-test:
+    name: Frontend Lint & Build (Next.js)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install Dependencies
+      working-directory: ./frontend
+      run: npm ci
+    - name: Run Linter
+      working-directory: ./frontend
+      run: npm run lint
+    - name: Test Build
+      working-directory: ./frontend
+      run: npm run build
+
+  mobile-test:
+    name: Mobile Lint & Test (Flutter)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    - name: Install Dependencies
+      working-directory: ./mobile
+      run: flutter pub get
+    - name: Run Linter
+      working-directory: ./mobile
+      run: flutter analyze
+    - name: Run Tests
+      working-directory: ./mobile
+      run: flutter test
+
+  docker-build:
+    name: Build & Push Docker Images
+    needs: [backend-test, frontend-test]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v3
+    # Normally we would use docker/login-action and docker/build-push-action here
+    - name: Build Backend Image
+      run: docker build -t enterprise-legal-backend ./backend
+    - name: Build Frontend Image
+      run: docker build -t enterprise-legal-frontend ./frontend
