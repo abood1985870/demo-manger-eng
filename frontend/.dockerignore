@@ -1,0 +1,12 @@
+node_modules
+.next
+test-results
+playwright-report
+*.db
+.env
+.env.*
+!.env.production.example
+.agents
+.claude
+.windsurf
+debug.log

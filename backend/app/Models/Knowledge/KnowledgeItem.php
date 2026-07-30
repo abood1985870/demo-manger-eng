@@ -12,7 +12,7 @@ class KnowledgeItem extends Model
     use HasUuid;
 
     protected $fillable = [
-        'tenant_id', 'knowledge_number', 'title_en', 'title_ar', 'summary',
+        'tenant_id', 'knowledge_number', 'source_case_id', 'title_en', 'title_ar', 'summary',
         'knowledge_type', 'document_version_id', 'status', 'confidentiality_level',
         'effective_date', 'expiration_date', 'author_id', 'reviewer_id', 'superseded_by'
     ];

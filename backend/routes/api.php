@@ -68,6 +68,15 @@ Route::middleware('auth:sanctum')->group(function () {
         // Additional endpoints for download, restore, share, permissions
     });
 
+    // Webhooks
+    Route::post('/webhooks/payment', [App\Http\Controllers\SubscriptionWebhookController::class, 'handle']);
+
+    // Permissions Management
+    Route::prefix('settings')->group(function () {
+        Route::get('/permissions', [App\Http\Controllers\PermissionsController::class, 'index']);
+        Route::put('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'update']);
+    });
+
     // Enterprise Workflow & Automation Engine
     Route::prefix('workflows')->group(function () {
         Route::post('/', [App\Http\Controllers\WorkflowController::class, 'store']);
@@ -188,40 +197,104 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/budgets/reserve', [App\Http\Controllers\Finance\BudgetController::class, 'reserveFunds']);
     });
 
-    // STEP L1 — Saudi Law Firm Edition Foundation
-    Route::prefix('legal')->group(function () {
-        Route::get('/matters/{id}', [App\Http\Controllers\Legal\LegalMatterController::class, 'show']);
-        
-        // STEP L2 — Litigation Foundation
-        Route::prefix('litigation')->group(function () {
-            Route::get('/cases/{id}', [App\Http\Controllers\Legal\LegalCaseController::class, 'show']);
-            Route::get('/cases/{id}/deadlines', [App\Http\Controllers\Legal\LegalDeadlineController::class, 'index']);
+    // STEP RE1 — Real Estate Property & Inventory Management
+    Route::prefix('real-estate')->group(function () {
+        Route::prefix('properties')->group(function () {
+            Route::get('/', [App\Http\Controllers\RealEstate\PropertyController::class, 'index']);
+            Route::get('/{id}', [App\Http\Controllers\RealEstate\PropertyController::class, 'show']);
+            Route::post('/', [App\Http\Controllers\RealEstate\PropertyController::class, 'store']);
         });
         
-        // STEP L3 — Finance & Billing Foundation
-        Route::prefix('finance')->group(function () {
-            Route::get('/invoices/{id}', [App\Http\Controllers\Legal\LegalInvoiceController::class, 'show']);
+        // STEP RE2 — Real Estate Units & Inventory
+        Route::prefix('units')->group(function () {
+            Route::get('/', [App\Http\Controllers\RealEstate\UnitController::class, 'index']);
+            Route::get('/{id}', [App\Http\Controllers\RealEstate\UnitController::class, 'show']);
+            Route::post('/{id}/reserve', [App\Http\Controllers\RealEstate\UnitController::class, 'reserve']);
         });
         
-        // STEP L4 — Contract Lifecycle Management
-        Route::prefix('clm')->group(function () {
-            Route::get('/contracts/{id}', [App\Http\Controllers\Legal\LegalContractController::class, 'show']);
+        // STEP RE3 — Sales CRM & Contracts
+        Route::prefix('sales')->group(function () {
+            Route::get('/leads', [App\Http\Controllers\RealEstate\LeadController::class, 'index']);
+            Route::get('/contracts/{id}', [App\Http\Controllers\RealEstate\ContractController::class, 'show']);
+        });
+        
+        // STEP RE4 — Off-Plan Sales (Wafi Integration)
+        Route::prefix('wafi')->group(function () {
+            Route::get('/escrow-accounts', [App\Http\Controllers\RealEstate\WafiController::class, 'escrowAccounts']);
+            Route::post('/progress-report', [App\Http\Controllers\RealEstate\WafiController::class, 'submitProgress']);
+            Route::get('/generate-report', [App\Http\Controllers\RealEstate\WafiController::class, 'generateReport']);
         });
 
-        // STEP L6 — Legal Knowledge Management
+        // STEP RE5 — Facility Management (Mullak Integration)
+        Route::prefix('mullak')->group(function () {
+            Route::get('/maintenance-requests', [App\Http\Controllers\RealEstate\MaintenanceController::class, 'index']);
+        });
+
+        // STEP RE7 — Brokers & Agencies Portal
+        Route::prefix('brokers')->group(function () {
+            Route::get('/inventory', [App\Http\Controllers\RealEstate\BrokerController::class, 'inventory']);
+            Route::post('/leads', [App\Http\Controllers\RealEstate\BrokerController::class, 'registerLead']);
+        });
+
+        // STEP RE8 — Executive C-Level Dashboard
+        Route::prefix('analytics')->group(function () {
+            Route::get('/executive-dashboard', [App\Http\Controllers\RealEstate\AnalyticsController::class, 'executiveDashboard']);
+        });
+
+        // Knowledge Management (Adapted for Corporate Real Estate)
         Route::prefix('knowledge')->group(function () {
             Route::get('/items/{id}', [App\Http\Controllers\Knowledge\KnowledgeItemController::class, 'show']);
         });
 
-        // STEP L7 — Legal Compliance (KYC/AML)
+        // Compliance (KYC/AML for Real Estate)
         Route::prefix('compliance')->group(function () {
             Route::get('/cases/{id}', [App\Http\Controllers\Compliance\ComplianceCaseController::class, 'show']);
         });
     });
 
-    // STEP L5 — External Portal API Boundary (Deny by default)
+    // STEP LGL1 — Enterprise Legal Management
+    Route::prefix('legal')->group(function () {
+        Route::prefix('knowledge')->group(function () {
+            Route::get('/', [App\Http\Controllers\Knowledge\KnowledgeController::class, 'index']);
+            Route::post('/', [App\Http\Controllers\Knowledge\KnowledgeController::class, 'store']);
+            Route::post('/{id}/approve', [App\Http\Controllers\Knowledge\KnowledgeController::class, 'approve']);
+        });
+
+        Route::post('/documents/extract', [App\Http\Controllers\Legal\LegalDocumentExtractionController::class, 'extract']);
+        Route::post('/cases/{id}/bundle', [App\Http\Controllers\Legal\CaseBundleController::class, 'sendBundle']);
+        
+        Route::prefix('invoices')->group(function () {
+            Route::get('/', [App\Http\Controllers\Legal\LegalInvoiceController::class, 'index']);
+            Route::post('/', [App\Http\Controllers\Legal\LegalInvoiceController::class, 'store']);
+            Route::get('/{id}', [App\Http\Controllers\Legal\LegalInvoiceController::class, 'show']);
+        });
+
+        Route::prefix('cases/{caseId}')->group(function () {
+            // Case File Manager
+            Route::get('/files', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'index']);
+            
+            Route::prefix('folders')->group(function () {
+                Route::post('/', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'createFolder']);
+                Route::put('/{folderId}/rename', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'renameFolder']);
+                Route::put('/{folderId}/move', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'moveFolder']);
+                Route::delete('/{folderId}', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'deleteFolder']);
+            });
+
+            Route::prefix('files')->group(function () {
+                Route::post('/', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'uploadFiles']);
+                Route::put('/{fileId}/rename', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'renameFile']);
+                Route::put('/{fileId}/move', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'moveFile']);
+                Route::delete('/{fileId}', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'deleteFile']);
+                Route::get('/{fileId}/download', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'downloadFile']);
+                Route::get('/{fileId}/preview', [App\Http\Controllers\Legal\CaseFileManagerController::class, 'previewFile']);
+            });
+        });
+    });
+
+    // STEP RE6 — External Customer Portal (Buyer Portal)
     Route::prefix('portal')->middleware('auth:portal-web')->group(function () {
-        Route::get('/matters/{id}', [App\Http\Controllers\Portal\PortalMatterController::class, 'show']);
+        Route::get('/my-units', [App\Http\Controllers\Portal\PortalUnitController::class, 'index']);
+        Route::get('/my-installments', [App\Http\Controllers\Portal\PortalInstallmentController::class, 'index']);
     });
 
 });

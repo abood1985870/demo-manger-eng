@@ -4,7 +4,10 @@ namespace App\Models\Legal;
 
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\LegalCaseObserver;
 
+#[ObservedBy(LegalCaseObserver::class)]
 class LegalCase extends Model
 {
     use HasUuid;

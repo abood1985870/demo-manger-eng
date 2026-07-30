@@ -4,3 +4,6 @@ node_modules
 *.log
 qa-clean.db
 /lib/generated/prisma
+
+.vercel
+.env*

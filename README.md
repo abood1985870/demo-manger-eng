@@ -1,67 +1,49 @@
-# Cafe Connect ☕
+# رُسوخ — منصة قيادة التطوير العقاري
 
-A professional application that connects cafes and customers. It features a dashboard for cafe management, monthly subscriptions, and a modern app for customers to discover and order from cafes.
+رُسوخ نظام عربي يعمل محلياً لإدارة محفظة مشاريع المطور العقاري: التقدم والجدول الزمني، التكلفة والقيمة المكتسبة، المبيعات والتحصيل، التراخيص والامتثال، المستندات، الفريق، وسجل التدقيق.
 
-## Project Structure
+## التشغيل المحلي للإنتاج
 
-This project is divided into two main parts: the **Backend** (Laravel) and the **Frontend** (Flutter).
+1. افتح `frontend/.env` واضبط `JWT_SECRET` بقيمة عشوائية قوية لا تقل عن 32 بايت.
+2. من مجلد `frontend` نفّذ:
 
-### 1. Backend (Laravel 12, PHP 8.4)
-Built with an advanced architecture incorporating Repository Pattern and Service Layer to maintain a clean separation of concerns and a highly scalable RESTful API.
+```powershell
+npm ci
+npx prisma migrate deploy
+npm run build
+npm run start
+```
 
-- **Framework:** Laravel 12
-- **Language:** PHP 8.4
-- **Database:** MySQL
-- **Authentication:** Laravel Sanctum
-- **Architecture:** Repository & Service Pattern
+أو شغّل `Run Production.bat` من مجلد المشروع بعد إتمام الإعداد الأولي. العنوان الافتراضي لحزمة التشغيل المجمعة هو `http://127.0.0.1:3100`.
 
-**Core Modules:**
-- `Authentication`
-- `Users`
-- `Cafes`
-- `Categories`
-- `Products`
-- `Orders`
-- `Offers`
-- `Reviews`
-- `Favorites`
-- `Notifications`
-- `Payments`
-- `Subscriptions`
-- `Admin`
+## التطوير
 
-### 2. Frontend (Flutter, Material 3)
-A modern, cross-platform mobile application built with Flutter using Clean Architecture principles to ensure maintainability, testability, and a seamless user experience.
+```powershell
+cd frontend
+npm ci
+npx prisma generate
+npm run dev
+```
 
-- **Framework:** Flutter (Latest Stable)
-- **Design System:** Material 3
-- **Architecture:** Clean Architecture (Domain, Data, Presentation layers)
+ثم افتح `http://localhost:3000`.
 
-**Core Features:**
-- `Authentication`
-- `Home`
-- `Cafes`
-- `Orders`
-- `Favorites`
-- `Offers`
-- `Profile`
-- `Admin`
+## مؤشرات لوحة التحكم
 
-## Setup Instructions
+- `SPI = EV / PV`: كفاءة الجدول الزمني.
+- `CPI = EV / AC`: كفاءة التكلفة.
+- نسبة الإنجاز: القيمة المكتسبة إلى ميزانية الإكمال.
+- نسبة المبيعات: الوحدات المباعة إلى إجمالي الوحدات.
+- حالة تراخيص البيع على الخارطة، رخصة البناء، كود البناء السعودي، وشهادة الإشغال لكل مشروع.
 
-### Backend Setup
-1. Navigate to the `backend` directory.
-2. Run `composer install` to install dependencies.
-3. Copy `.env.example` to `.env` (or use the pre-configured `.env` file).
-4. Generate the application key: `php artisan key:generate`.
-5. Run the database migrations: `php artisan migrate`.
-6. Start the local server: `php artisan serve`.
+تُخزّن بيانات هذه المؤشرات في `DevelopmentProjectProfile`، وترتبط بكل مشروع داخل قاعدة بيانات Prisma.
 
-### Frontend Setup
-1. Navigate to the `frontend` directory.
-2. Run `flutter pub get` to install dependencies.
-3. Configure the base API URL in the Flutter app to point to your local Laravel server (e.g., `http://10.0.2.2:8000` for Android emulator or `http://localhost:8000` for iOS simulator).
-4. Run the app: `flutter run`.
+## فحوص التسليم
 
-## Git Workflow
-The project is initialized with Git. Ensure to follow standard branch naming conventions (e.g., `feature/module-name`, `fix/issue-description`).
+```powershell
+npm run typecheck
+npm run lint
+npm run build
+npm run test:e2e
+```
+
+النسخ الاحتياطي والاستعادة موثقان في `frontend/docs/BACKUP_AND_RESTORE.md`.

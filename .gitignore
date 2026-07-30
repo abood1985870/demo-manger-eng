@@ -29,6 +29,12 @@ private*.key
 /frontend/**/*.log
 /frontend/**/*.iml
 /frontend/.env
+/frontend/**/*.db
+/frontend/**/*.sqlite
+/frontend/**/*.sqlite3
+/frontend/data/
+/frontend/backups/
+/frontend/prisma/postgresql/schema.prisma
 
 .DS_Store
 .idea/
@@ -38,3 +44,12 @@ private*.key
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
+.env*
+Rusukh Demo-win32-x64/
+output/
+test-results/
+frontend/test-results/
+*.exe
+*.log

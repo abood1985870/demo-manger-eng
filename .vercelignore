@@ -1,0 +1,14 @@
+node_modules
+.next
+output
+mobile
+launcher
+docs
+Rusukh Demo-win32-x64
+test-results
+*.exe
+*.zip
+*.dll
+*.db
+.git
+.github
