@@ -1,0 +1,6 @@
+node_modules
+.env
+.next
+*.log
+qa-clean.db
+/lib/generated/prisma
