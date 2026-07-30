@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
   
   // Security Headers for Content Security Policy, Frame Ancestors, etc.
   async headers() {
