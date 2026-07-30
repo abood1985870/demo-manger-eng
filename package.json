@@ -1,0 +1,12 @@
+{
+  "name": "cafe-app-root",
+  "version": "1.0.0",
+  "scripts": {
+    "install": "cd frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "dev": "cd frontend && npm run dev"
+  },
+  "dependencies": {
+    "next": "14.2.3"
+  }
+}
