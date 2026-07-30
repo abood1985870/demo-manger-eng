@@ -1,28 +1,57 @@
 {
-  "name": "enterprise-legal-frontend",
-  "version": "1.0.0",
+  "name": "rusukh-real-estate-platform",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "prisma": "prisma",
+    "prisma:prepare:prod": "node scripts/prepare-postgresql-schema.cjs",
+    "prisma:generate:prod": "npm run prisma:prepare:prod && prisma generate --schema=prisma/postgresql/schema.prisma",
+    "prisma:migrate:prod": "npm run prisma:prepare:prod && prisma migrate deploy --schema=prisma/postgresql/schema.prisma",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "node tests/run-external-server.cjs",
+    "test:cross-browser": "node tests/run-cross-browser.cjs"
   },
   "dependencies": {
-    "next": "14.2.0",
+    "clsx": "^2.1.0",
+    "jose": "^6.2.4",
+    "lucide-react": "^0.370.0",
+    "next": "16.2.11",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "next-intl": "^3.11.1",
-    "@tanstack/react-query": "^5.29.2",
-    "tailwindcss": "^3.4.3",
-    "lucide-react": "^0.370.0"
+    "sharp": "^0.35.3",
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
-    "typescript": "^5.4.5",
+    "@playwright/test": "^1.61.1",
+    "@prisma/client": "^5.14.0",
     "@types/node": "^20.12.7",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.0"
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.2.11",
+    "postcss": "^8.5.23",
+    "prisma": "^5.14.0",
+    "tailwindcss": "^3.4.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "allowScripts": {
+    "prisma@5.14.0": true,
+    "@prisma/engines@5.14.0": true,
+    "@prisma/client@5.14.0": true
+  },
+  "overrides": {
+    "next@16.2.11": {
+      "postcss": "8.5.23",
+      "sharp": "0.35.3"
+    }
+  },
+  "prisma": {
+    "seed": "node_modules/.bin/ts-node.cmd --project prisma/tsconfig.seed.json prisma/seed.ts"
   }
 }
