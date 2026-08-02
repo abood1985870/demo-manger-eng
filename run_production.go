@@ -32,7 +32,7 @@ func main() {
 
     // Start frontend (assumes npm script "dev" in ./frontend)
     frontendPath := fmt.Sprintf("%s%cfrontend", dir, os.PathSeparator)
-    frontendCmd := exec.Command("npm", "run", "dev")
+    frontendCmd := exec.Command("npm", "run", "dev", "--", "-p", "9000")
     frontendCmd.Dir = frontendPath
     frontendCmd.Stdout = os.Stdout
     frontendCmd.Stderr = os.Stderr
@@ -45,8 +45,8 @@ func main() {
 
     // Give servers a moment to start, then open default browser
     time.Sleep(5 * time.Second)
-    fmt.Println("Opening browser at http://127.0.0.1:8000")
-    exec.Command("cmd", "/c", "start", "http://127.0.0.1:8000").Start()
+    fmt.Println("Opening browser at http://127.0.0.1:9000")
+    exec.Command("cmd", "/c", "start", "http://127.0.0.1:9000").Start()
 
     // Wait for backend (and frontend if started) to exit when user closes the exe
     fmt.Println("Press Ctrl+C to stop both servers.")

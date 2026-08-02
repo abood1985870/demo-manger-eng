@@ -4,12 +4,15 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   BarChart3,
+  BrainCircuit,
   Building2,
   CalendarRange,
   ChevronLeft,
   CircleDollarSign,
+  Crown,
   FileCheck2,
   FileText,
+  Home,
   LayoutDashboard,
   LogOut,
   Menu,
@@ -24,7 +27,11 @@ import { ModulePermissionKey, parseModulePermissions } from '@/lib/module-permis
 
 const menuItems = [
   { name: 'نظرة تنفيذية', href: '/dashboard', icon: LayoutDashboard, permission: 'dashboard' },
+  { name: 'مستشار الذكاء الاصطناعي ✨', href: '/ai-cfo', icon: BrainCircuit, permission: 'dashboard' },
+  { name: 'عروض المستثمرين VIP 👑', href: '/pitch-decks', icon: Crown, permission: 'projects' },
+  { name: 'إدارة علاقات العملاء (CRM)', href: '/crm', icon: Users, permission: 'clients' },
   { name: 'المشاريع', href: '/matters', icon: Building2, permission: 'projects' },
+  { name: 'المخزون والوحدات', href: '/units', icon: Home, permission: 'projects' },
   { name: 'الجدول الزمني', href: '/litigation', icon: CalendarRange, permission: 'timeline' },
   { name: 'التكاليف', href: '/billing', icon: WalletCards, permission: 'billing' },
   { name: 'المبيعات والتحصيل', href: '/clients', icon: CircleDollarSign, permission: 'clients' },
