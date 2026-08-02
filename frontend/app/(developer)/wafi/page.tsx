@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import WafiDashboard from './WafiDashboard';
 
 export const metadata = { title: 'نظام وافي — البيع على الخارطة | رُسوخ' };

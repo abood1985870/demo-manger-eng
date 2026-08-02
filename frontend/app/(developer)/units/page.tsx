@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import UnitsDashboard from './UnitsDashboard';
 
 export const metadata = { title: 'المخزون والوحدات العقارية — رُسوخ' };

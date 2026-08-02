@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import ClientDashboard from './ClientDashboard';
 
 export const metadata = { title: 'بوابة المستثمر | رُسوخ' };
@@ -9,7 +9,7 @@ export default async function ClientPortalPage() {
   const client = await prisma.client.findFirst({
     where: { name: 'عبدالله الراجحي (مستثمر VIP)' },
     include: {
-      purchasedUnits: {
+      Unit: {
         include: {
           property: {
             include: {
@@ -33,7 +33,7 @@ export default async function ClientPortalPage() {
   return (
     <ClientDashboard 
       client={client} 
-      units={client.purchasedUnits} 
+      units={client.Unit} 
       invoices={client.invoices} 
     />
   );

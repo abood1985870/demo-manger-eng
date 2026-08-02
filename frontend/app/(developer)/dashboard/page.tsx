@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import ExecutiveDashboard from './ExecutiveDashboard';
 
 export const metadata = { title: 'اللوحة التنفيذية | رُسوخ' };

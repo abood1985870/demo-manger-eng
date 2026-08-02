@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import CrmBoard from './CrmBoard';
 
 export const metadata = { title: 'المبيعات والعملاء | رُسوخ' };
