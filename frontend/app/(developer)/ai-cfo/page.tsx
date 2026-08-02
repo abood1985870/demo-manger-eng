@@ -4,7 +4,7 @@ import RusukhAiEngine from './RusukhAiEngine';
 
 export const metadata = { title: 'المستشار المالي الذكي | رُسوخ' };
 
-export default function AiCfoPage() {
+export default async function AiCfoPage() {
   const store = await cookies();
   const tenantId = store.get('tenantId')?.value;
   const userRole = store.get('userRole')?.value?.toLowerCase();
