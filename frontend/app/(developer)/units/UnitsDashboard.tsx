@@ -149,15 +149,15 @@ export default function UnitsDashboard({ properties }: { properties: any[] }) {
 
         <div className="space-y-12">
           {properties.map((property) => {
-            const allUnitsCount = property.units.length;
-            const availableCount = property.units.filter((u: any) => u.status === 'AVAILABLE').length;
-            const soldCount = property.units.filter((u: any) => u.status === 'SOLD').length;
-            const reservedCount = property.units.filter((u: any) => u.status === 'RESERVED').length;
+            const allUnitsCount = property.Unit.length;
+            const availableCount = property.Unit.filter((u: any) => u.status === 'AVAILABLE').length;
+            const soldCount = property.Unit.filter((u: any) => u.status === 'SOLD').length;
+            const reservedCount = property.Unit.filter((u: any) => u.status === 'RESERVED').length;
             
             const soldPercentage = allUnitsCount > 0 ? Math.round((soldCount / allUnitsCount) * 100) : 0;
             const imgPath = imageMap[property.type] || '/images/masterplan_project.png';
             
-            const filteredUnits = property.units.filter((u: any) => filterStatus === 'ALL' || u.status === filterStatus);
+            const filteredUnits = property.Unit.filter((u: any) => filterStatus === 'ALL' || u.status === filterStatus);
             
             if (filteredUnits.length === 0 && filterStatus !== 'ALL') return null;
 

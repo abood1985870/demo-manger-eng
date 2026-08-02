@@ -5,7 +5,7 @@ import ExecutiveDashboard from './ExecutiveDashboard';
 export const metadata = { title: 'اللوحة التنفيذية | رُسوخ' };
 
 export default async function DashboardPage() {
-  const store = cookies();
+  const store = await cookies();
   const tenantId = store.get('tenantId')?.value;
 
   if (!tenantId) {
@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   const properties = await prisma.property.findMany({
     where: { tenantId },
     include: {
-      wafiEscrowAccount: true,
+      WafiEscrowAccount: true,
       wafiProgressReports: {
         orderBy: { reportDate: 'desc' }
       },

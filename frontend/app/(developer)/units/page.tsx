@@ -5,7 +5,7 @@ import UnitsDashboard from './UnitsDashboard';
 export const metadata = { title: 'المخزون والوحدات العقارية — رُسوخ' };
 
 export default async function UnitsPage() {
-  const store = cookies();
+  const store = await cookies();
   const tenantId = store.get('tenantId')?.value;
 
   if (!tenantId) {
@@ -15,8 +15,8 @@ export default async function UnitsPage() {
   const properties = await prisma.property.findMany({
     where: { tenantId },
     include: {
-      units: true,
-      manager: true,
+      Unit: true,
+      User: true,
     },
     orderBy: { createdAt: 'asc' },
   });

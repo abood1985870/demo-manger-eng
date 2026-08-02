@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 export const metadata = { title: 'إدارة العقود (CLM) — رُسوخ' };
 
 export default async function ContractsPage() {
-  const store = cookies();
+  const store = await cookies();
   const tenantId = store.get('tenantId')?.value;
 
   if (!tenantId) {

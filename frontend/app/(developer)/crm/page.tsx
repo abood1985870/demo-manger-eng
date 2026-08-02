@@ -5,7 +5,7 @@ import CrmBoard from './CrmBoard';
 export const metadata = { title: 'المبيعات والعملاء | رُسوخ' };
 
 export default async function CrmPage() {
-  const store = cookies();
+  const store = await cookies();
   const tenantId = store.get('tenantId')?.value;
 
   if (!tenantId) {

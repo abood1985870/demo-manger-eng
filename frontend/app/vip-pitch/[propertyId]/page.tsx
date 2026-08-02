@@ -16,7 +16,7 @@ export default async function VipPitchPage({ params }: { params: { propertyId: s
   const property = await prisma.property.findUnique({
     where: { id: params.propertyId },
     include: {
-      units: true,
+      Unit: true,
       Tenant: true,
     },
   });
@@ -24,8 +24,8 @@ export default async function VipPitchPage({ params }: { params: { propertyId: s
   if (!property) return notFound();
 
   // Calculate stats for the pitch deck
-  const totalUnits = property.units.length;
-  const availableUnits = property.units.filter(u => u.status === 'AVAILABLE');
+  const totalUnits = property.Unit.length;
+  const availableUnits = property.Unit.filter(u => u.status === 'AVAILABLE');
   const soldUnitsCount = totalUnits - availableUnits.length;
   const averagePrice = availableUnits.length > 0 
     ? availableUnits.reduce((acc, curr) => acc + (curr.price || 0), 0) / availableUnits.length

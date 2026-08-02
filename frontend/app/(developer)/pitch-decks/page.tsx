@@ -6,7 +6,7 @@ import PitchDeckManager from './PitchDeckManager';
 export const metadata = { title: 'عروض المستثمرين (VIP Pitch Decks) | رُسوخ' };
 
 export default async function PitchDecksPage() {
-  const store = cookies();
+  const store = await cookies();
   const tenantId = store.get('tenantId')?.value;
 
   if (!tenantId) redirect('/login');
@@ -14,7 +14,7 @@ export default async function PitchDecksPage() {
   const properties = await prisma.property.findMany({
     where: { tenantId },
     include: {
-      units: true,
+      Unit: true,
     },
     orderBy: { createdAt: 'desc' },
   });

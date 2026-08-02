@@ -86,7 +86,7 @@ export default function CrmBoard({ leads }: { leads: any[] }) {
                       {lead.interestedPropertyId && (
                         <div className="flex items-center gap-2 text-xs text-slate-400 mb-4 bg-slate-950 p-2 rounded-lg border border-slate-800">
                           <Building2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                          <span className="truncate">{lead.property?.name || 'عقار محدد'}</span>
+                          <span className="truncate">{lead.Property?.name || 'عقار محدد'}</span>
                         </div>
                       )}
 

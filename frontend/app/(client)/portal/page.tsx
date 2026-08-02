@@ -11,9 +11,9 @@ export default async function ClientPortalPage() {
     include: {
       Unit: {
         include: {
-          property: {
+          Property: {
             include: {
-              wafiProgressReports: {
+              WafiProgressReport: {
                 orderBy: { reportDate: 'desc' }
               }
             }

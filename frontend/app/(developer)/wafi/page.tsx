@@ -5,7 +5,7 @@ import WafiDashboard from './WafiDashboard';
 export const metadata = { title: 'نظام وافي — البيع على الخارطة | رُسوخ' };
 
 export default async function WafiPage() {
-  const store = cookies();
+  const store = await cookies();
   const tenantId = store.get('tenantId')?.value;
 
   if (!tenantId) {
@@ -15,8 +15,8 @@ export default async function WafiPage() {
   const properties = await prisma.property.findMany({
     where: { tenantId },
     include: {
-      wafiEscrowAccount: true,
-      wafiProgressReports: {
+      WafiEscrowAccount: true,
+      WafiProgressReport: {
         orderBy: { reportDate: 'desc' }
       }
     },

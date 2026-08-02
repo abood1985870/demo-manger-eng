@@ -54,14 +54,14 @@ export default function ClientDashboard({ client, units, invoices }: { client: a
         {activeTab === 'units' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {units.map((unit) => {
-              const latestReport = unit.property?.wafiProgressReports?.[0];
-              const progress = latestReport ? latestReport.approvedProgressPercentage : (unit.property.status === 'COMPLETED' ? 100 : 0);
+              const latestReport = unit.Property?.WafiProgressReport?.[0];
+              const progress = latestReport ? latestReport.approvedProgressPercentage : (unit.Property?.status === 'COMPLETED' ? 100 : 0);
 
               return (
                 <div key={unit.id} className="bg-slate-900 border border-white/5 rounded-3xl overflow-hidden shadow-2xl group hover:border-amber-500/30 transition-colors">
                   <div className="h-48 relative overflow-hidden bg-slate-800">
                     <Image 
-                      src={unit.property.type === 'BUILDING' ? '/images/tower_project.png' : '/images/villa_project.png'} 
+                      src={unit.Property?.type === 'BUILDING' ? '/images/tower_project.png' : '/images/villa_project.png'} 
                       alt="Property" 
                       layout="fill" 
                       objectFit="cover"
@@ -70,7 +70,7 @@ export default function ClientDashboard({ client, units, invoices }: { client: a
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
                     <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
                       <div>
-                        <p className="text-xs text-amber-400 font-bold mb-1">{unit.property.name}</p>
+                        <p className="text-xs text-amber-400 font-bold mb-1">{unit.Property.name}</p>
                         <h2 className="text-2xl font-black text-white">وحدة #{unit.unitNumber}</h2>
                       </div>
                       <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">

@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Topbar } from '@/components/layout/Topbar';
 import { ModuleAccessGuard } from '@/components/layout/ModuleAccessGuard';
-import { CommandCenter } from '@/components/layout/CommandCenter';
+import CommandCenter from '@/components/layout/CommandCenter';
 import { AiAssistantWidget } from '@/components/AiAssistantWidget';
 import { getSession } from '@/lib/auth';
 
