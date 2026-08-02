@@ -82,7 +82,7 @@ export default function PitchDeckManager({ properties }: { properties: any[] }) 
                     </button>
                     
                     <Link 
-                      href={\`/vip-pitch/\${property.id}\`}
+                      href={`/vip-pitch/${property.id}`}
                       target="_blank"
                       className="flex-[2] bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-bold py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)] flex justify-center items-center gap-2"
                     >

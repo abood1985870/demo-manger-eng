@@ -37,10 +37,10 @@ export default function VipPitchClient({ property, availableUnitsCount, soldUnit
         <div 
           className="absolute inset-0 z-0"
           style={{ 
-            backgroundImage: \`url('\${bgImage}')\`, 
+            backgroundImage: `url('${bgImage}')`, 
             backgroundSize: 'cover', 
             backgroundPosition: 'center',
-            transform: \`translateY(\${scrollY * 0.5}px) scale(1.1)\`,
+            transform: `translateY(${scrollY * 0.5}px) scale(1.1)`,
             filter: 'brightness(0.4)'
           }}
         ></div>
